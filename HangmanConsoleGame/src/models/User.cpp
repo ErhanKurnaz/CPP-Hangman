@@ -1,5 +1,4 @@
 #include "User.h"
-#include "User.h"
 
 User::User(std::string& name) {
 	User::mName = name;
@@ -11,7 +10,7 @@ std::string User::getName()
 	return User::mName;
 }
 
-int User::getPoints()
+int User::getPoints() const
 {
 	return User::mPoints;
 }
@@ -21,7 +20,7 @@ void User::addPoint()
 	User::mPoints++;
 }
 
-bool User::operator<(User& user) const
+bool User::operator < (const User& user) const
 {
 	return (user.getPoints() < User::mPoints);
 }

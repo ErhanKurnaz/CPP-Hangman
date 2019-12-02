@@ -10,10 +10,10 @@ public:
 
 	std::string getName();
 
-	int getPoints();
+	int getPoints() const;
 
 	void addPoint();
 
-	bool operator < (User& user) const;
+	bool operator < (const User& user) const;
 };
 

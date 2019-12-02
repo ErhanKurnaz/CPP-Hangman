@@ -53,13 +53,14 @@ message("${PROJECT_NAME}: CURR BIN DIR: ${CMAKE_CURRENT_BINARY_DIR}")
 
 # Source Files
 set(SRC_FILES
-    src/models\User.cpp
+    src/models/User.cpp
+    src/HangmanConsoleGame.cpp
 )
 source_group("Sources" FILES ${SRC_FILES})
 
 # Header Files
 set(HEADERS_FILES
-    src/models\User.h
+    src/models/User.h
 )
 source_group("Headers" FILES ${HEADERS_FILES})
 
