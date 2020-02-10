@@ -8,9 +8,29 @@
 #include <stdlib.h>
 #include <time.h>
 #include <algorithm>
+#include <fstream>
 #include "models/User.h"
 
-std::array<std::string, 3> words = { "kat", "hond", "vogel" };
+std::array<std::string, 370103> words = {};
+
+void initWords() {
+	std::cout << "initializing words" << std::endl;
+	std::ifstream file;
+	file.open(((std::string)SOURCE_DIR).append("/src/res/words_alpha.txt"));
+
+	if (file.is_open()) {
+		std::string word;
+
+		int i = 0;
+		while (std::getline(file, word)) {
+			words[i] = word;
+			i++;
+		}
+		file.close();
+	}
+
+	std::cout << "done initializing" << std::endl << std::endl;
+}
 
 int askPlayerSize() {
 	int size = 0;
@@ -47,7 +67,8 @@ std::vector<User> initUsers(int size) {
 	return users;
 }
 
-void finishGame(std::vector<User>& users) {
+void finishGame(std::vector<User>& users, std::string& word) {
+	std::cout << "de word was: " << word << std::endl << std::endl;
 	std::sort(users.begin(), users.end());
 
 	for (int i = 0; i < (int) users.size(); i++) {
@@ -92,11 +113,11 @@ bool find(std::string& word, std::string& playWord, char& letter) {
 	return false; // the player didn't guess wrong
 }
 
-void playGame(std::vector<User>& users) {
+void playGame(std::vector<User>& users, std::string& word) {
 	bool gameFinished = false;
 	std::string guessedChars;
 	srand((unsigned int) time(NULL));
-	std::string word = words[rand() % words.size()];
+	word = words[rand() % words.size()];
 	std::string playWord = getPlayWord(word);
 
 	while (!gameFinished)
@@ -148,10 +169,12 @@ void playGame(std::vector<User>& users) {
 
 int main()
 {
+	initWords();
 	const int size = askPlayerSize();
 	std::vector<User> users = initUsers(size);
-	playGame(users);
-	finishGame(users);
+	std::string word;
+	playGame(users, word);
+	finishGame(users, word);
 
 	return 0;
 }
